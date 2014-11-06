@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OWL Ontology converter</title>
+      <link href="style.css" type="text/css" rel="stylesheet" />
+      <script type="text/javascript">
+
+        function handleFileSelect(files) {
+          var file = files[0];
+
+          if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+              var contents = e.target.result;
+              document.getElementById('input').value = contents;
+            }
+            reader.readAsText(file);
+          } else {
+            alert('Failed to load file');
+          }
+        }
+        
+        function convert() {
+            var inputText = document.getElementById('input').value;
+            var selectedSyntax = document.getElementById('select_syntax').value;
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (request.readyState == 4 && request.status == 200) {                
+                    document.getElementById('result').innerHTML = request.responseText;
+                } else if (request.readyState == 4 && request.status == 400) {
+                  alert('Error on loading the input as an ontology');
+                } else if (request.readyState == 4 && request.status == 500) {
+                  alert('Error on converting the input');
+                }
+            }
+            request.open('POST', 'convert', true);
+            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');            
+            request.send('export_syntax=' + selectedSyntax + '&input=' + encodeURIComponent(inputText));
+          }
+      </script>
+  </head>
+  <body>
+	  <div class="cols">
+		  <p>Input Ontology</p>
+		  <div class=textareacontainer>
+			  <textarea id="input" rows="40" wrap="hard"></textarea>
+		  </div>
+		  External file: <input type="file" id="files" onchange="handleFileSelect(this.files);" name="files[]" />
+	  </div>
+	  <div class="cols">
+		  <p>Export result</p>
+		  <div class=textareacontainer>
+			  <textarea id="result" rows="40" wrap="hard"></textarea>
+		  </div>
+		  <select id="select_syntax">
+        <option value ="rdfxml" selected>RDF/XML</option>
+        <option value ="owlxml">OWL/XML</option>
+        <option value ="turtle">Turtle</option>
+        <option value ="manchester">Manchester Syntax</option>
+        <option value ="functional">Functional-Style Syntax</option>
+        <option value ="texowl">TeX-OWL</option>
+      </select>
+      <input type="submit" onclick="convert();" value="Convert" />
+	  </div>
+  </body>
+</html>

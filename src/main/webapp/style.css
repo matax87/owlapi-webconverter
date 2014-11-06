@@ -1,0 +1,50 @@
+.cols {
+	width: 50%;
+	float: left;
+	text-align: center;
+}
+
+.cols p {
+	text-align: center;
+}
+
+.menupersonalization {
+	float: right;
+	width: 50%;
+}
+
+textarea {
+	width: 96%;
+}
+
+.nocol {
+	text-align: center;
+	margin-top: 10px;
+	padding-top: 10px;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	float: left;
+	width: 100%;
+}
+
+div>p {
+	margin-bottom: 0px;
+}
+
+.body>p {
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #AAAAAA;
+}
+
+.centermenu {
+	margin: auto;
+	width: 200px;
+}
+
+.share {
+	font-size: 80%;
+	color: gray;
+	margin-top: 15px;
+	float: left;
+}
